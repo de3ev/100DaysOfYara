@@ -1,0 +1,15 @@
+rule financialxlsm {
+meta:
+  authors = "Denice"
+  description = "sample from PMAT labs, Day 3 of 100 Days of Yara"
+
+strings:
+  $str1 = "vba"
+  $str2 = "xl/vbaproject.bin" nocase
+  $str3 = "worksheets" nocase
+  $str4 = "workbook" nocase
+  $header = { 50 4B 03 04 14 00 06 00 ?? }
+
+condition:
+  any of them and $header at 0 
+}

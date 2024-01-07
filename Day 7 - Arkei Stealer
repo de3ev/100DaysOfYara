@@ -1,0 +1,27 @@
+import "pe"
+
+rule detects_arkei_stealer 
+  {  
+    meta:
+      author = "Denice"
+      description = "Detects if file contains Arkei Stealer components"
+
+    strings:
+      $str1 = "mbctype.c" nocase
+      $str2 = "f:\\dd\\vctools\\crt_bld\\self_x86\\crt\\src\\mbctype.c" fullword ascii
+      $str3 = ".pdb"
+      $import1 = "CharToOemBuffW"
+      $import2 = "SetFileApisToANSI"
+      $import3 = "CreateMailslotW"
+      $import4 = "CreateIoCompletionPort"
+      $hex = { 7F 00 66 00 3A 00 ?? }
+
+    condition:
+      any of ($str*) and
+      2 of ($import*) and 
+      $hex
+      uint16be(0) == 0x4D5A and
+      pe.timestamp == 1601371920 and
+      filesize < 3MB 
+}
+      

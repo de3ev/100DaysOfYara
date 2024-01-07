@@ -21,7 +21,7 @@ rule detects_arkei_stealer
     condition:
       any of ($str*) and
       3 of ($import*) and 
-      $hex
+      $hex and
       uint16be(0) == 0x4D5A and
       pe.timestamp == 1601371920
   }

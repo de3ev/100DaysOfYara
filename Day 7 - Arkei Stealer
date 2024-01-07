@@ -23,7 +23,6 @@ rule detects_arkei_stealer
       3 of ($import*) and 
       $hex
       uint16be(0) == 0x4D5A and
-      pe.timestamp == 1601371920 and
-      filesize < 3MB 
-}
+      pe.timestamp == 1601371920 ann
+  }
       

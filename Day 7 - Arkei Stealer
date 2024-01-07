@@ -19,10 +19,10 @@ rule detects_arkei_stealer
       $hex = { 43 3A 5C 63 ?? }
 
     condition:
+      uint16be(0) == 0x4D5A and
       any of ($str*) and
       3 of ($import*) and 
       $hex and
-      uint16be(0) == 0x4D5A and
       pe.timestamp == 1601371920
   }
       

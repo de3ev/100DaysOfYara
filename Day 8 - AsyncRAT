@@ -1,0 +1,23 @@
+import “pe”
+
+rule detects_async_rat
+{
+  meta:
+    author = “Denice”
+    description = “Detects Async RAT”
+
+strings:
+    $str1 = “_CorExeMain”
+    $str2 = “ /f /q” wide
+    $str3 = “\\nuR\\noisreVtnerruC\\swodniW\\tfosorciM\\erawtfoS” wide
+    $str4 = “X509Certificates” nocase
+    $str5 = “AsyncClient.exe”
+    $str6 = “/c schtasks /create /f /sc onlogon /r1 highest /tn “ wide
+    
+
+condition: 
+  uint16be(0) == 0x5D4A and
+  all of them and
+  pe.imports (”mscoree.dll”)
+
+}

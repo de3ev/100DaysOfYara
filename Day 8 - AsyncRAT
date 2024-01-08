@@ -16,7 +16,7 @@ strings:
     
 
 condition: 
-  uint16be(0) == 0x5D4A and
+  uint16be(0) == 0x4D5A and
   all of them and
   pe.imports (”mscoree.dll”)
 

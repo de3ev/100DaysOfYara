@@ -3,6 +3,7 @@ rule detects_pandabanker
   meta:
     author = "Denice"
     description = "Detects Panda Banker"
+    hash = "59d3e30ab2c88297ba001812cf4d28b73b766efdaf594a06454dd780d146f054"
 
   strings:
     $str1 = "cmd.exe" wide fullword

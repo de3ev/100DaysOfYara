@@ -1,0 +1,23 @@
+rule detects_pandabanker 
+{
+  meta:
+    author = "Denice"
+    description = "Detects Panda Banker"
+
+  strings:
+    $str1 = "cmd.exe" wide fullword
+    $str2 = "/c \"%s\"" wide
+    $str3 = "del /F \"%s\""
+    $str4 = "/c start \"\" \"%s\"" wide
+    $import1 = "HeapFree
+    $import2 = "InterlockedIncrement"
+    $import3 = "InterlockedDecrement"
+    $import4 = "InterlockedExchange"
+    $import5 = "HeapDestroy"
+    $import6 = "GetProcessHeap"
+    $import7 = "GetProcAddress"
+
+condition:
+    all of them
+
+}

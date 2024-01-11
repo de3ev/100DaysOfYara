@@ -9,11 +9,13 @@ rule checks_email_content
     $str2 = "DKIM-Signature" nocase
     $str3 = "Authentication-Results" 
     $str4 = "does not designate" fullword
+    $str4 = "message not signed" 
     $result1 = "spf=fail"
     $result2 = "dkim=fail"
     $result3 = "softfail"
     $result4 = "fail"
     $result5 = "Received-SPF: fail" wide
+    $result6 = "dmarc=fail"
 
   condition:
     all of ($str*) and 3 of ($result*)

@@ -1,0 +1,21 @@
+rule checks_email_content
+{
+  meta:
+    author = "Denice"
+    Description = "Checks if email sender is the authorized sender of the domain"
+    
+  strings:
+    $str1 = "Date:From:To:Subject" fullword
+    $str2 = "DKIM-Signature" nocase
+    $str3 = "Authentication-Results" 
+    $str4 = "does not designate" fullword
+    $result1 = "spf=fail"
+    $result2 = "dkim=fail"
+    $result3 = "softfail"
+    $result4 = "fail"
+    $result5 = "Received-SPF: fail" wide
+
+  condition:
+    all of ($str*) and 3 of ($result*)
+}
+

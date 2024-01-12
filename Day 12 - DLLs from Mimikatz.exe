@@ -1,0 +1,25 @@
+rule detects_mimikatz_dll
+{
+    meta:
+        author = "Denice"
+        description = "DLLs found from Mimikatz.exe (x64)"
+    
+    strings:
+        $lib1 = "ADVAPI32.dll"
+        $lib2 = "Cabinet.dll"
+        $lib3 = "CRYPT32.dll"
+        $lib4 = "cryptdll.dll"
+        $lib5 = "DNSAPI.dll"
+        $lib6 = "FLTLIB.DLL"
+        $lib7 = "NETAPI32.dll"
+        $lib8 = "OLEAUT32.dll"
+        $lib9 = "RPCRT4.dll"
+        $lib10 = "SHLWAPI.dll"
+        $lib11 = "SAMLIB.dll"
+        $lib12 = "Secur32.dll"
+        $lib13 = "SHELL32.dll"
+    
+    condition:
+        all of them
+}
+

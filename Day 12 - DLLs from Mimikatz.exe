@@ -2,9 +2,18 @@ rule detects_mimikatz_dll
 {
     meta:
         author = "Denice"
-        description = "DLLs found from Mimikatz.exe (x64)"
+        description = "Strings and DLLs found from Mimikatz.exe (x64)"
     
     strings:
+        $str1 = "Benjamin" nocase
+        $str2 = "Delpy" nocase
+        $str3 = "password"
+        $str4 = "NTLM"
+        $str5 = "LDAP"
+        $str6 = " * %3u/%3u MasterKey(s) imported" wide
+        $str7 = "username" nocase
+        $str8 = "Pass-the-ccache [NT6]" wide
+        $str9 = "kerberos" nocase
         $lib1 = "ADVAPI32.dll"
         $lib2 = "Cabinet.dll"
         $lib3 = "CRYPT32.dll"

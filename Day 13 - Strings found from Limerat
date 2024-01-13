@@ -1,0 +1,16 @@
+rule limerat_strings
+{
+  meta:
+    author = "Denice"
+    description = "Some strings found from Limerat"
+
+  strings:
+    $str1 = ".snk"
+    $str2 = "Guangzhou1" fullword
+    $str3 = "CreateDecryptor"
+    $str4 = "CipherMode"
+    $str5 = "ICryptoTransform"
+
+  condition:
+    all of them
+}

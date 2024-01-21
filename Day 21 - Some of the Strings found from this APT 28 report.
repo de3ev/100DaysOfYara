@@ -1,0 +1,22 @@
+rule apt28_strings
+{  
+  meta:
+    author = "Denice"
+    description = "Some of the Strings found from this APT 28 report."
+    reference = "https://cert.gov.ua/article/6276894"
+
+  strings:
+    $str1 = "fun" nocase
+    $str2 = "oast" nocase
+    $str3 = "firstcloudit" nocase
+    $str4 = "powershell.exe" nocase
+    $str5 = "ipconfig /flushdns" wide
+    $str6 = "RarSFX0" nocase
+    $str7 = "czyrqdnvpujmmjkfhhvsgapqr3hclnhhj" nocase
+    $str8 = "VMSearch" nocase
+    $str9 = "sfx" nocase
+    
+
+  condition:
+    any of them
+}

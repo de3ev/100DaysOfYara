@@ -1,0 +1,23 @@
+rule curator_ransomware_notes
+  {
+    meta:
+      author = "Denice"
+      description = "Ransomware notes found from Curator Ransomware"
+      hash = "4d2c614ba98df43601b6d9551bd26684"
+
+    strings:
+      $str1 = "! YOUR NETWORK HAS BEEN COMPROMISED !" wide
+      $str2 = "All your important files have been encrypted!" wide
+      $str3 = "Your files are safe! Only modified." wide
+      $str4 = "ANY ATTEMPT TO RESTORE A FILE WITH THIRD-PARTY SOFTWARE WILL PERMANENTLY CORRUPT IT." wide
+      $str5 = "No software available on internet can help you. We are the only ones able to solve your problem." wide
+      $str6 = "We gathered data from different segment of your network. These data are currently stored on a private server and will be immediately destroyed after your payment." wide
+      $str7 = "If you decide to not pay, we will keep your data stored and contact press or re-seller or expose it on our partner's website." wide
+      $str8 = "We only seek money and do not want to damage your reputation or prevent your business from running." wide
+      $str9 = "If you take wise choice to pay, all of this will be solved very soon and smoothly." wide
+      
+    condition:
+      uint16be(0) == 0x4D5A and
+      5 of ($str*)
+  }
+

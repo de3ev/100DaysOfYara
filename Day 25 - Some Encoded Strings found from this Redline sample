@@ -20,6 +20,8 @@ rule encoded_strings_redline
       $amadey = "D:\\Mktmp\\Amadey\\Release\\Amadey.pdb"
 
     condition:
-      6 of them and $amadey
+      uint16be(0) == 0x4D5A and
+      6 of them and 
+      $amadey
 }
 

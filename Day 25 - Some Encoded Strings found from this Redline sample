@@ -1,0 +1,19 @@
+rule encoded_strings_redline
+  {
+    meta:
+      author = "Denice"
+      description = "Some Encoded Strings found from this Redline sample"
+      hash = "b1cd15500694ceef46716c96007d334b3b2f737e181f085d05617ebd72f73688"
+    
+    strings:
+      $str1 = "Q0IpQZK2SJuoNYDcTPeKLSIDMGZSTwFBNC4LKlF="
+      $str2 = "NivmIj=="
+      $str3 = "Z04xMIiDNbP6MUcfch2v2ZQY1J4ubkWzi3I4H60A6dPn7DQhciGl2ZWaV18BbEdC4XE4M0Sn6=="
+      $str4 = "OVQKIYOSNb3zLSoBJL==" 
+      $str5 = "OnIbGT=" 
+      $str6 = "Z1gKMH0PQvHU6lAhbiKz2ZWYgqZxU0042EIm3qWA5Tr6J00pcCOWPUAM20RqXCSzgXwS5J0AMdzmSO=="
+
+    condition:
+      4 of them
+  }
+

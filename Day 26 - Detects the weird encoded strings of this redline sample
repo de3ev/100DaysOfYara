@@ -1,0 +1,28 @@
+rule redline_hex
+  {
+    meta:
+      author = "Denice"
+      description = "Detects the weird encoded strings of this redline sample"
+      hash = "b1cd15500694ceef46716c96007d334b3b2f737e181f085d05617ebd72f73688"
+
+    strings:
+      $hex1 = { 51 30 49 70 51 5A 4B 32 53 4A 75 6F 4E 59 44 63 54 50 65 4B 4C 53 49 44 4D 47 5A }
+        //weird encoded string: Q0IpQZK2SJuoNYDcTPeKLSIDMGZSTwFBNC4LKlF==
+        //decoding this results to these chinese characters: 儰䥰党䬲半畯乙䑣呐敋䱓䥄䵇婓呷䙂乃㑌䭬䘽
+      $hex2 = { 4E 69 76 6D 49 6A }
+     		//NivmIj==
+    	  //乩癭䥪㴽
+      $hex3 = { 5A 30 34 78 4D ?? 69 44 } 
+        //Z04xMIiDNbP6MUcfch2v2ZQY1J4ubkWzi3I4H60A6dPn7DQhciGl2ZWaV18BbEdC4XE4M0Sn6==
+        //ず破䥍䑩扎㙐啍晣档瘲娲契䨱甴止穗㍩㑉㙈䄰搶湐䐷桑楣汇娲慗ㅖ䈸䕢䍤場㑅き湓㴶
+      $hex4 = { 4F 6E 49 62 47 54 }
+			  //OnIbGT=
+			  //湏扉呇
+      $hex5 = {33 57 45 61 51 4A 30 6F 53 54 62 69 34 6B 6B }
+			  //3WEaQJ0oSTbi4kkobRYr3Ewwg7H6dli8jXjnDWNBGuOVGx81LQ1==
+			  //圳慅䩑漰呓楢欴潫剢牙䔳睷㝧㙈汤㡩塪湪坄䉎畇噏硇ㄸ兌㴱
+
+    condition:
+       all of them
+}
+

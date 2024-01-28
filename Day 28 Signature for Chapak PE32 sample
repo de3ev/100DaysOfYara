@@ -1,0 +1,23 @@
+rule chapak_32
+
+{
+  meta:
+    author = "Denice"
+    description = "Signature for Chapak PE32 sample"
+  
+  strings:
+    /*
+    assume es:nothing, ss:nothing, ds:_data, fs:nothing, gs:nothing
+    sub_401000 proc near
+    mov     ecx, offset unk_440EB0
+    jmp     sub_405EEE
+    sub_401000 endp                            
+    */
+    $hex = { B9 B0 0E 44 00 E9 E4 4E }
+     
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    $hex
+
+}

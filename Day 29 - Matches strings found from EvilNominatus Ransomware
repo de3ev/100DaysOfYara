@@ -3,6 +3,7 @@ rule detects_evilnominatus
   meta:
     author = "Denice"
     description = "Matches the strings found from EvilNominatus Ransomware"
+    hash = "69811a6c9376b219b335a055cfa970d38cd768abeca7138a2c1905560d468fef"
   
   strings:
     $str1 = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System /v DisableRegistryTools /t REG_DWORD /d 1 /f" wide

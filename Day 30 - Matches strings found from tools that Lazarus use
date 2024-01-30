@@ -1,0 +1,27 @@
+rule detects_lazarus_tools
+{
+  meta:
+    author = "Denice"
+    description = "Detects Tools used by North Korean AKA Lazarus Group"
+    hash = "47d121087c05568fe90a25ef921f9e35d40bc6bec969e33e75337fc9b580f0e8"
+    hash = "C0E27B7F6698327FF63B03FCCC0E45EFF1DC69A571C1C3F6C934EF7273B1562F"
+    
+  strings:
+    $s1 = "bbz2.pyd"
+    $s2 = "_MEI%d" wide //decoding this result to this: 䵟䥅搥
+    $s3 = "bunicodedata.pyd"
+    $s4 = "zout00-PYZ.pyz"
+    $s5 = "File: %ws, Line %u"
+    $s6 = "opyi-windows-manifest-filename Responder.exe.manifest"
+    $s7 = "crypto/x509v3/v3_pmaps.c"
+    $s8 = "crypto/x509v3/v3_utl.c"
+    $s9 = "sqlite3"
+    $s10 = "server"
+    $d1 = "bmsvcr90.dll"
+    $d2 = "python27.dll"
+
+  condition:
+    any of them
+
+}
+

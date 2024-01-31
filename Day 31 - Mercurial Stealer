@@ -1,0 +1,26 @@
+rule detects_mercurialstealer
+{
+  meta:
+    author = "Denice"
+    hash = "7CCF9C71166DF6CABD5DFBDBBB78A3E9BDA721C43DD4F882765F86E6838E3B75"
+    hash = "B2C7AA4CA944E68737D9A4BA5D07902504FEF7728DF7E8AAC79AFC93E427992A"
+
+  strings:
+    $str1 = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" wide
+    $str2 = "SYSTEM\\CurrentControlSet\\Control\\CriticalDeviceDatabase\\root#vmwvmcihostdev" wide
+    $str3 = "Drive {0}\\ - {1}" wide
+    $str4 = "DetectDebug"
+    $str5 = "Mercurial Grabber" wide
+    $str6 = "StealCookies"
+    $str7 = "StealPasswords"
+    $str8 = "<PrivateImplementationDetails>{955EDFFE-B2EF-4BB6-ADB3-29CB8D7D86E3}"
+    $str9 = "HKLM:\\" wide
+    $str10 = "\\Google\\Chrome\\User Data\\default\\Cookies" wide
+    $str11 = "Nitro Gen v1.exe"
+    $hex1 = { 6D 00 66 00 61 00 5C 00 2E 00 5B 00 5C 00 77 00 } 
+    $hex2 = { 4E 69 67 68 74 6D 61 72 65 }
+
+  condition:
+    uint16be(0) == 0x4D5A and
+    any of them
+}

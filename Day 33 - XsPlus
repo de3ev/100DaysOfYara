@@ -1,0 +1,21 @@
+rule xsplus_yara_detection
+{
+  meta:
+    author = "Denice"
+    description = "matching strings found from xsplus"
+    hash = "026a995ce57eda08767cb567023ecd8cf4a097280258da6d2e9705b3cd5d29ec"
+  
+  strings:
+    $str1 = "phdof.vicp.net"
+    $str2 = "c:\\mm\\reader_sl.exe"
+    $str3 = "%USERPROFILE%\\Application Data"
+    $str4 = "g:\\MyProjects\\xServer\\Release\\xServer.pdb"
+    $hex1 = { 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 }
+    $hex2 = { 3A 14 3A 18 3A 1C 3A 20 3A 24 3A 28 3A 2C 3A 30 3A 34 3A 38 3A 3C 3A 40 3A 44 3A 48 3A 4C 3A 50 3A 54 3A }
+    $a1 = "IsDebuggerPresent"
+    $a2 = "DestroyWindow"
+
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+}

@@ -1,0 +1,21 @@
+rule detects_strings_from_haronransomware
+{
+    meta:
+      author = "Denice"
+      description = "Detects and matches some strings found from Haron Ransomware"
+    
+    strings:
+      $enc1 = "iyKPpdLbvyaTP" //楹䭐灤䱢癹慔
+      $enc2 = "lFgzQnJAwgbFda" //汆杺兮䩁睧扆摡
+      $enc3 = "QgDGAmKqWjjfHH" //村䝄流煋橗晪䡈
+      $enc4 = "tbEcytZrelt" //扴捅瑹牚汥
+      $enc5 = "MMQrXwfPiftU" //䵍兲塷晐楦瑕
+      $str1 = "chaddadshare.exe"
+      $str2 = "CreateDecryptor"
+      $str4 = "CreateEncryptor"
+      $str5 = "GenerateIV"
+      $str6 = "GenerateKey"
+    
+    condition:
+      uint16be(0) == 0x4D5A and all of them
+}

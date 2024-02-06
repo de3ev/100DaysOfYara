@@ -2,7 +2,7 @@ rule detects_pushdo
 {
   meta:
     author = "Denice"
-    description = "Checks and detects if the strings matches this Pushdo sample"
+    description = "Checks and detects if the strings match this Pushdo sample"
     hash = "891823DE9B05E17DEF459E04FB574F94"
     
   strings:

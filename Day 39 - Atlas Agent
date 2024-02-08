@@ -1,0 +1,20 @@
+rule detects_atlas
+{
+  meta:
+    author = "Denice"
+    description = "Matches strings from Atlas Agent"
+    hash = "2ef26042422e2cf48870e6d97921f8d916f6886457d013602623d06906f10fda"
+  
+  strings:
+    $str1 = "c:\\programdata\\*"
+    $str2 = "C:\\Users\\invokeops\\Documents\\Code\\atlasagent\\x64\\Release\\AtlasDLL.pdb"
+    $str3 = "IPHLPAPI.DLL"
+    $str4 = "InitializeCriticalSectionEx"
+    $str5 = "DecodePointer"
+    $str6 = "LCMapStringEx"
+    $str7 = "C:\\Windows\\System32\\WEB.rs" wide
+  
+  condition:
+    uint16be(0) == 0x4D5A and all of them
+
+}

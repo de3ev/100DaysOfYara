@@ -1,0 +1,22 @@
+rule detects_adhubllka
+{
+  meta:
+    author = "Denice"
+    description = "Detects and Matches Adhubllka sample"
+    hash = "6eba5ef4b3d7f1210e7ff9eff9dc1d2d22cfad489496423e941edb0bfa3cee34"
+  
+  strings:
+    $str1 = "__ProviderArchitecture" wide
+    $str2 = "select * from Win32_ShadowCopy" wide
+    $str3 = "Win32_ShadowCopy.ID='%s'" wide
+    $str4 = "%ls\\%ls" wide
+    $dll = "advapi32" wide
+    $dll2 = "ntdll" wide
+    $note = "Read_Me.txt" wide
+    
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+
+}

@@ -1,0 +1,59 @@
+rule detects_DJVU_ransomware
+{
+  meta:
+    author = "Denice"
+    description = "Detects and Matches DJVU ransomware"
+    hash = "9355D983C76ED660B0C6CB8D1E6583852A07A2C5095E26F84D58BD3569DD71AF"
+
+  strings:
+    $hex1 = { 8D 45 F4 50 FF 75 F0 FF  75 E4 FF 75 E0 FF 15 }
+        /*
+        loc_496760:
+        lea     eax, [ebp+Arguments]
+        push    eax             ; lpArguments
+        push    [ebp+nNumberOfArguments] ; nNumberOfArguments
+        push    [ebp+dwExceptionFlags] ; dwExceptionFlags
+        push    [ebp+dwExceptionCode] ; dwExceptionCode
+        call    ds:RaiseException
+        leave
+        retn    8
+        __CxxThrowException@8 endp
+        */
+    $hex2 = { 6A 0C 68 10 F9 49 ?? }
+        /*
+        V6_HeapAlloc proc near
+        
+        var_1C= dword ptr -1Ch
+        ms_exc= CPPEH_RECORD ptr -18h
+        arg_0= dword ptr  8
+        
+        ; __unwind { // __SEH_prolog4
+        push    0Ch
+        push    offset stru_49F910
+        call    __SEH_prolog4
+        and     [ebp+var_1C], 0
+        mov     esi, [ebp+arg_0]
+        cmp     esi, dword_90B3CC
+        ja      short loc_496E07
+        */
+    $pdb = "C:\\cecen\\yaxovaxakocit_wevefigomadat\\hemapinewi\\rasunef v.pdb"
+    $import1 = "HeapAlloc" //memory
+    $import2 = "HeapReAlloc" //memory
+    $import3 = "FlushViewOfFile"
+    $import4 = "CreateMutexW"
+    $import5 = "AdjustTokenPrivileges"
+    $import6 = "CreateFileA"
+    $import7 = "SetEnvironmentVariableA"
+    $import8 = "CreateConsoleScreenBuffer"
+    $str1 = "FUBEVITIHUM" wide
+    $str2 = "DPufepu menefe becedecocu bamayegibovur fecatekojurire nudajubikuwotu" wide
+    $str3 = "voygmuopoke.exe" wide
+    
+  condition:
+    uint16be(0) == 0x4D5A and
+    any of ($hex*) and
+    $pdb and
+    4 of ($import*) and
+    all of ($str*)
+}
+

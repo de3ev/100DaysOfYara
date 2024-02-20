@@ -1,0 +1,28 @@
+rule yara_rule_for_get2
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for detecting Get2"
+    hash = "fe97f76dd2b0c461020968f84b4399cdebb3fc2e4934f0491377ccaee568d8c5"
+  
+  strings:
+    $str1 = "QRSV"
+    $str2 = "C:\\Users\\J\\AppData\\Local\\Temp\\basecamp" wide
+    $str3 = "%d Ty%d Ex%d Au%d Tr%d NL%d As%d MxC%d MxA%d SR%x  %d"
+    $str4 = "RPC_NT_NO_MORE_BINDINGS"
+    $str5 = "kernel32"
+    $str6 = "$QRSVWUARASATAUAVAWI"
+    $import1 = "CreateEventA"
+    $import2 = "GetEnvironmentStrings"
+    $import3 = "GetCommandLineW"
+    $import4 = "GetACP"
+    $import5 = "CoUninitialize"
+    $import6 = "SetUnhandledExceptionFilter"
+    $import7 = "CreateMutexA"
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of ($str*) and
+    any of ($import*)
+}
+

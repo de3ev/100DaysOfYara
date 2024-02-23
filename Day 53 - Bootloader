@@ -1,0 +1,22 @@
+rule yara_rule_for_bootloader
+{
+  meta:
+    author = "Denice"
+    description = "Matches strings found from this Bootloader"
+    hash = "0e416e3cc1673d8fc3e7b2469e491c005152b9328515ea9bbd7cf96f1d23a99f"
+  
+  strings:
+    $str1 = "minkernel\\crts\\ucrt\\inc\\corecrt_internal_strtox.h" wide
+    $str2 = "src\\core\\sync\\event.d"
+    $str3 = "src\\core\\internal\\switch_.d"
+    $str4 = "Advapi32.dll"
+    $str5 = "RegDeleteKeyExW"
+    $str6 = "std\\algorithm\\mutation.d"
+    $str7 = "C:\\D\\dmd-2.096.1\\windows\\bin\\..\\..\\src\\phobos\\std\\range\\primitives.d"
+    $str8 = "std.base64.Base64Exception"
+    
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+
+}

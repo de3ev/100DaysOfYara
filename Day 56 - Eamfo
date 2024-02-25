@@ -1,0 +1,27 @@
+rule yara_for_eamfo_sample
+{
+  meta:
+    author = "Denice"
+    description = "Detects and Matches from this Eamfo sample"
+    hash = "df492b4cc7f644ad3e795155926d1fc8ece7327c0c5c8ea45561f24f5110ce54"
+    
+  strings:
+    $str1 = "System"
+    $str2 = "Open"
+    $str3 = "System.Reflection"
+    $str4 = "set_Connection"
+    $str5 = "DbConnection"
+    $str6 = "SqlConnection"
+    $str7 = "Exception"
+    $str8 = "DbCommand"
+    $str9 = "SqlCommand"
+    $str10 = "IDisposable"
+    $str11 = "RuntimeTypeHandle"
+    $str12 = "veeamp.exe"
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+
+}
+

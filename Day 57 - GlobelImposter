@@ -1,0 +1,23 @@
+rule yara_globelImposter
+{
+  meta:
+    author = "Denice"
+    description = "Detects and Matches the commands found from this Globelimposter sample"
+    hash = "70D29F6FC320559DEB47A7DEBB9C046DCC4C48E6E6E36BC9F7ADC616FA7105EF"
+    
+  strings:
+    $cmd1 = "vssadmin.exe Delete Shadows /All /Quiet"
+    $cmd2 = "reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Default\" /va /f"
+    $cmd3 = "reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal Server Client\\Servers\" /f"
+    $str1 = "cd %userprofile%\\documents\\"
+    $str2 = "attrib Default.rdp -s -h"
+    $str3 = "del Default.rdp "
+    $str4 = "for /F \"tokens=*\" %1 in ('wevtutil.exe el') DO wevtutil.exe cl \"%1\""
+    $str5 = "taskkill /F /T /PID"
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+
+}
+

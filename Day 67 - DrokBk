@@ -1,0 +1,64 @@
+rule drokbk_yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara Rule for DrokBK"
+    hash = "64f39b858c1d784df1ca8eb895ac7eaf47bf39acf008ed4ae27a796ac90f841b"
+  
+  strings:
+    $str1 = "Drokbk.exe" wide
+    $str2 = "HeapFree"
+    $str3 = "GetProcessHeap"
+    $str4 = "HeapAlloc"
+    $str5 = "GetCommandLineA"
+    $str6 = "HeapCreate"
+    $str7 = "VirtualFree"
+    $str8 = "DeleteCriticalSection"
+    $str9 = "LeaveCriticalSection"
+    $str10 = "VirtualAlloc"
+    $str11 = "HeapReAlloc"
+    $str12 = "IsDebuggerPresent"
+    $hex1 = { 68 22  00 04 00 53 50 ?? }
+        /*
+        push    ebx             ; Val
+        push    eax             ; void *
+        call    _memset
+        mov     ecx, [esp+4A8h+Src]
+        add     esp, 0Ch
+        mov     [esp+49Ch+var_44C], ecx
+        jmp     short loc_401EF3
+        */
+    $hex2 = { 81 EC 8C 04 00 00 53 55  56 57 33 DB }
+        /*
+        sub     esp, 48Ch
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        xor     ebx, ebx
+        push    ebx             ; pvReserved
+        call    ds:OleInitialize
+        lea     eax, [esp+49Ch+var_388]
+        push    eax             ; void *
+        lea     ecx, [esp+4A0h+var_48C]
+        push    ecx             ; int
+        mov     byte ptr [esp+4A4h+var_48C], 0E0h
+        mov     byte ptr [esp+4A4h+var_48C+1], 3Bh ; ';'
+        mov     byte ptr [esp+4A4h+var_48C+2], 8Dh
+        mov     byte ptr [esp+4A4h+var_48C+3], 2Ah ; '*'
+        mov     [esp+4A4h+var_488], 0A2h
+        mov     [esp+4A4h+var_487], 2Ah ; '*'
+        mov     [esp+4A4h+var_486], 2Ah ; '*'
+        mov     [esp+4A4h+var_485], 41h ; 'A'
+        mov     [esp+4A4h+var_484], 0D3h
+        mov     [esp+4A4h+var_483], 20h ; ' '
+        mov     [esp+4A4h+var_482], 64h ; 'd'
+        mov     [esp+4A4h+var_481], 6
+        */
+    
+  condition:
+    uint16be(0) == 0x4D5A and
+    6 of ($str*) and
+    $hex1 and $hex2
+}
+

@@ -1,0 +1,34 @@
+rule dave_loader_yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Dave Loader"
+    hash = "dbdfc3ca5afa186c1a9a9c03129773f7bc17fb7988fe0ca40fc3c5bedb201978"
+  
+  strings:
+    $str1 = "EntropyEXE.exe"
+    $str2 = "crtexe.c"
+    $str3 = "cinitexe.c"
+    $str4 = "qZBtvblhGierCepKAYtoDAOhZy"
+    $str5 = "eTJUyBSEnemCpoLZxCoITMHMEk"
+    $str6 = "dPrkngRsuHzYQoYvZYt"
+    $str7 = "CreateMutexA"
+    $str8 = "CreateSemaphoreA"
+    $hex = { 48 8D 45 F0  48 89 C1 48 8B 05 }
+      /*
+      loc_401BB4:
+      lea     rax, [rbp+0B0h+Msg]
+      mov     rcx, rax        ; lpMsg
+      mov     rax, cs:__imp_TranslateMessage
+      call    rax ; __imp_TranslateMessage
+      lea     rax, [rbp+0B0h+Msg]
+      mov     rcx, rax        ; lpMsg
+      mov     rax, cs:__imp_DispatchMessageA
+      call    rax ; __imp_DispatchMessageA
+      jmp     loc_401D12
+      */
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of ($str*) and $hex
+}

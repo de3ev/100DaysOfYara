@@ -1,0 +1,28 @@
+import "pe"
+
+rule osno_yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Osno, including the encoded strings found, if decoded, will give chinese characters as result"
+    hash = "cee813ca9cbae7f72c04643d07ff7374349db6c3bfd70cc5f8a6d00fa2e51ecc"
+    
+  strings:
+    $exe = "qe.exe"
+    $s1 = ".dat" wide
+    $s2 = "Good job! Picture is sorted!" wide
+    $s3 = "Arquiva" nocase
+    $s4 = "pessoa"
+    $s5 = "tramite"
+    $s6 = "kPis41GdwR1BsLweJO0oDzkMGd36F9llVAIhOmf07ZGM7vFZLzprSFHCuEpNK7T9M78MZaucqOM5FOWt9UyC6loTAR0rsvxcSGp9Tbr9Zw9Gm5QLR0"
+    $s7 = "pwiuwkyN1RdAO5h63kPwT6VvLGY3tD"
+    $s8 = "xsox+QdoW1GuxvtmlG14"
+    $s9 = "fkH1YLsZVhBQHeSWCjylOB9x7aIeAcCgsuK6EGxxNxW4MwtonwxOEbG6nxsEkq9zlSVwGhq6CzGieM3HUa5XYgz0C5gnQg39ulPmaj"
+    $s10 = "TtvZnbDbMwy72sDlxmnEGWBmUZYIBREGRzhsWhmWmZxpnusbsHGVRE3Hc7jJpEMbhF0ahERVxD4ot+ieuYl1VNlPiSiJJoYnB7T3i"
+    $s11 = "dv2fSoqrHL+18ZORJqe+MvuTKrTvLbrp2ivfWgo9e3PGhd1rPYw9oP+r+y7fu21rif+4P+55+O"
+  
+  condition:
+    uint16be(0) == 0x4D5A and pe.imports ("mscoree.dll" ,"_CorExeMain") and
+    $exe and 6 of ($s*)
+}
+

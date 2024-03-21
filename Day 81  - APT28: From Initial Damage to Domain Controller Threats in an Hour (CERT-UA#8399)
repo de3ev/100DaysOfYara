@@ -18,7 +18,7 @@ rule APT_28_Yara_Rule
     $s10 = "VMSearch"
     $s11 = "systemupdate.lnk" wide
     $s12 = "taskkill /F /PID" wide
-    $s13 = "http://194.126.178.8/webdav/wody.zip" wide
+    $s13 = "hxxp://194[.]126[.]178[.]8/webdav/wody[.]zip" wide
     $s14 = "jrb@bahouholdings[.]com" wide
     $s15 = "facadesolutionsuae[.]com" wide
     $url = "czyrqdnvpujmmjkfhhvsclx05sfi23bfr[.]oast[.]fun" 

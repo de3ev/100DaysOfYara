@@ -1,0 +1,21 @@
+rule Pikabot_Yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Pikabot Detection from VX"
+    hash = "da81259f341b83842bf52325a22db28af0bc752e703a93f1027fa8d38d3495ff"
+  
+  strings:
+    $s1 = "RTLCPAPI"
+    $s2 = "realtek" nocase wide
+    $s3 = "bootim.exe" wide
+    $s4 = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\BootLocale" wide
+    $s5 = "Local\\SM0:%d:%d:%hs" wide
+    $s6 = "SYSTEM\\CurrentControlSet\\Control\\MiniNT" wide
+    $s7 = "createsemaphore" nocase
+    $s8 = "Root Entry" nocase wide
+  
+  condition:
+    filesize < 2MB and
+    all of them
+}

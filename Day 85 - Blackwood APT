@@ -1,0 +1,20 @@
+rule yara_blackwood_DLL
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Blackwood APT new DLL Loader"
+    reference = "https://vx-underground.org/APTs/2024/2024.01.29%20-%20Blackwood%20APT%20Group%20Has%20a%20New%20DLL%20Loader"
+  
+  strings:
+    $str1 = "333333333333333.txt"
+    $str2 = "Update.ini"
+    $api1 = "GetCurrentProcessId"
+    $api2 = "OpenProcess"
+    $api3 = "VirtualAlloc"
+    $api4 = "malloc"
+    $api5 = "DeleteFileA"
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+}

@@ -1,0 +1,52 @@
+import "pe"
+rule azorult_yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Azorult sample"
+    hash = "C5DB907C35FB4F5C61325E4C1ED3BAADB8957F7D53F4A41D9388DCF19177D5F7"
+  
+  strings:
+    $s1 = "bukassss.exe"
+    $s2 = "What to include in your COVID-19 risk assessment"
+    $s3 = "Izzhskyhzfrihdeepvfgx.Xgdkqbneuz.dll"
+    $s4 = "Izzhskyhzfrihdeepvfgx.Properties.Resources"
+    $s5 = "validateserializer" nocase wide
+    $s6 = "restartserializer" nocase
+    $import = "t5c6eae10fac044459783c9fa405c1771" //weird import name?
+    $hex = { 02 28 01 00 00 0a 2a 1e 02 28 01 00 00 }
+        /*
+        Izzhskyhzfrihdeepvfgx.Consumers::Listener::.ctor();
+        0x0040205d      add     ch, byte [eax]
+        0x0040205f      add     dword [eax], eax
+        0x00402061      add     byte [edx], cl
+        0x00402063      sub     bl, byte [esi]
+        bukassss.Mocks::ReaderIdentifierMock::.ctor();
+        0x00402065      add     ch, byte [eax]
+        0x00402067      add     dword [eax], eax
+        0x00402069      add     byte [edx], cl
+        0x0040206b      sub     bl, byte [esi]
+        */
+    $hex2 = { 38 69 01 00 00 fe 0c 08 00 45 03 00 00 00 dd }
+        /*
+        bukassss.Models::Importer::RestartListener(int32_t arg_3h, int32_t arg_13h);
+        ; arg int32_t arg_3h @ stack + 0x3
+        ; arg int32_t arg_13h @ stack + 0x13
+        0x0040260c      cmp     byte [ecx + 1], ch
+        0x0040260f      add     byte [eax], al
+        0x00402611      dec     byte [eax + ecx]
+        0x00402614      add     byte [arg_3h], al
+        0x00402617      add     byte [eax], al
+        0x00402619      add     ch, bl
+        0x0040261b      add     byte [eax], al
+        0x0040261d      add     byte [ecx + 0x7a000001], dh
+        0x00402623      add     dword [eax], eax
+        0x00402625      add     byte [eax], bh
+        0x00402627      fadd    dword [eax]
+        0x00402629      add     byte [eax], al
+        */
+  
+  condition:
+    pe.imports("mscoree.dll","_CorExeMain") and
+    filesize < 1MB and 4 of ($s*) and $import and all of ($hex*)
+}

@@ -1,0 +1,25 @@
+rule Yara_Nosu
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule to detect Nosu binary"
+    hash = "6499cadaea169c7dfe75b55f9c949659af49649a10c8b593a8db378692a11962"
+    
+  strings:
+    $s1 = "%s\\%u\\[DECODED]%s" wide
+    $s2 = "%s\\%u\\[RAW]%s"
+    $s3 = "persist:root" wide
+    $s4 = "stored in zip:\\%s" wide
+    $s5 = "C:\\xampp\\htdocs\\nosu\\core\\release\\lilly.pdb"
+    $s6 = "minkernel\\crts\\ucrt\\inc\\corecrt_internal_strtox.h" wide
+    $imp1 = "CredEnumerateW"
+    $imp2 = "LoadLibraryExW"
+    $imp3 = "WriteConsoleW"
+    $imp4 = "ExpandEnvironmentStringsW"
+    $imp5 = "TerminateProcess"
+    $imp6 = "PathRemoveFileSpecW"
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    4 of ($s*) and all of ($imp*)
+}

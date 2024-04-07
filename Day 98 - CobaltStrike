@@ -2,7 +2,7 @@
   {
     meta:
       author = "Denice"
-      description = "Day 98 of 100daysofyara, Matching and Detecting the decoded var and functions from cobaltstrike, including some strings and few imports"
+      description = "Day 98 of 100daysofyara, Matching and Detecting the endecoded(commented the decoded var and func) var and functions from cobaltstrike, including some strings and few imports"
       reference = "https://bazaar.abuse.ch/sample/cfbbd4db0db3888b50c247e5f379fe039d6ce4c5a7fd7e2bbcc3b1b3e3b91ab9"
       hash = "CFBBD4DB0DB3888B50C247E5F379FE039D6CE4C5A7FD7E2BBCC3B1B3E3B91AB9"
     

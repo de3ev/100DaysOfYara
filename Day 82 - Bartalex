@@ -1,0 +1,21 @@
+rule Yara_Rule_for_Bartalex
+{
+  meta:
+    author = "Denice"
+    description = "Bartalex"
+    hash = "61A7CC6ED45657FA1330E922AEA33254B189EF61"
+  
+  strings:
+    $s1 = "epic[.]su"
+    $s2 = "andyberteyn[.]be"
+    $s3 = "hxxp://al-balsam[.]com/tmp/lns[.]txt"
+    $s4 = "1623782[.]txt"
+    $func1 = "dtgt" nocase //public function
+    $func2 = "nybdqwd" nocase //public function from module 5
+    $func3 = "huwe" nocase
+  
+  condition:
+    uint32be(0) == 0xd0cf11e0 and
+    all of them
+}
+

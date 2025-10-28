@@ -1,0 +1,33 @@
+rule rule_for_agniane_stealer
+{
+  meta:
+    author = "Denice"
+    description = "AgnianeStealer"
+    hash = "e8901779b53e491d1f9f7b5406116f5927745ab46053a5f1f5c51463444ea4d9"
+
+  strings:
+    $str1 = "Silk.exe"
+    $str2 = "b c%d%e'f'g'h'i<j<k<l<m<n<o<p<q<r<s<t<u<v<w<x<y<z<{=|=}=~=" wide
+    $str3 = "$24BE5A30-EDFE-11D2-B933-00104B365C9F"
+    $str4 = "85332E00AFFFDBE44E7421AA4236274F9495AC6C2204C59B9ADFC872D4215E12"
+    $str5 = "4E252E1C-C2A6-426B-8FB6-BB49EE9AABF1"
+    $str6 = "C2D8E5EED6CBEBD8625FC18F81486A7733C04F9B0129FFBE974C68B90308B4F2"
+    $str7 = "mozglue.dll" wide
+    $str8 = "sqlitedatareader" nocase
+    $sql1 = "SELECT creation_utc,top_frame_site_key,host_key,name,value,encrypted_value,path,expires_utc,is_secure,is_httponly,last_access_utc,has_expires,is_persistent,priority,samesite,source_scheme,source_port,is_same_party FROM cookies" wide
+    $sql2 = "SELECT origin_url,action_url,username_element,username_value,password_element,password_value,submit_element,signon_realm,date_created,blacklisted_by_user,scheme,password_type,times_used,form_data,display_name,icon_url,federation_url,skip_zero_click,generation_upload_status,possible_username_pairs,id,date_last_used,moving_blocked_for,date_password_modified FROM logins" wide
+    $sql3 = "SELECT id,url,title,visit_count,typed_count,last_visit_time,hidden FROM urls" wide
+    $sql4 = "SELECT id,guid,current_path,target_path,start_time,received_bytes,total_bytes,state,danger_type,interrupt_reason,hash,end_time,opened,last_access_time,transient,referrer,site_url,tab_url,tab_referrer_url,http_method,by_ext_id,by_ext_name,etag,last_modified,mime_type,original_mime_type,embedder_download_data FROM downloads" wide
+    $sql5 = "SELECT name,value,value_lower,date_created,date_last_used,count FROM autofill" wide
+    $sql6 = "SELECT guid,name_on_card,expiration_month,expiration_year,card_number_encrypted,date_modified,origin,use_count,use_date,billing_address_id,nickname FROM credit_cards" wide
+    $sql7 = "SELECT id,originAttributes,name,value,host,path,expiry,lastAccessed,creationTime,isSecure,isHttpOnly,inBrowserElement,sameSite,rawSameSite,schemeMap FROM moz_cookies" wide
+    $sql8 = "SELECT id,url,title,rev_host,visit_count,hidden,typed,frecency,last_visit_date,guid,foreign_count,url_hash,description,preview_image_url,origin_id,site_name FROM moz_places" wide
+    $sql9 = "SELECT id,type,fk,parent,position,title,keyword_id,folder_type,dateAdded,lastModified,guid,syncStatus,syncChangeCounter FROM moz_bookmarks" wide
+    $sql10 = "SELECT id,place_id,anno_attribute_id,content,flags,expiration,type,dateAdded,lastModified FROM moz_annos" wide
+    $sql11 = "SELECT id,fieldname,value,timesUsed,firstUsed,lastUsed,guid FROM moz_formhistory" wide
+
+  condition:
+    uint16be(0) == 0x4D5A and
+    4 of ($str*) and
+    5 of ($sql*)
+}

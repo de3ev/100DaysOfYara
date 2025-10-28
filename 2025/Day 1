@@ -1,0 +1,22 @@
+rule agenda_ransomware
+{
+meta:
+author = "Denice"
+description = "Agenda Ransomware"
+hash = "E90BDAAF5F9CA900133B699F18E4062562148169B29CB4EB37A0577388C22527"
+
+strings:
+	$q = "Qilin"
+	$note2 = "Encrypted files have new extension."
+	$note3 = "Financial information including clients databillsbudgetsannual reportsbank statements"
+	$note4 = "Complete datagrams/schemas/drawings for manufacturing in solidworks forma"
+	$note5 = "The police or authorities will not be able to help you get the cipher key. We encourage you to consider your decisions"
+	$str1 = "rust"
+	$str2 = "cargo" //Detects presence of Cargo repo, it downloads and compiles Rust dependencies
+	$api1 = "Sleep"
+	$api2 = "SleepEx"
+	$onion = "qq7cja2yx2ptaad.onion"
+	
+condition:
+	uint16be(0) == 0x4D5A and 6 of them or ($onion)
+	}

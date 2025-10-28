@@ -1,0 +1,23 @@
+rule yara_eternity_project
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Eternity Project"
+    hash = "eb812b35acaeb8abcb1f895c24ddba8bb32f175308541d8db856f95d02ddcfe2"
+  
+  strings:
+    $str1 = "pb > Base.kNumPosStatesBitsMax" wide nocase
+    $str2 = "type=deactivation&hash=" wide
+    $str3 = "//Discord//Local Storage//leveldb//000005.ldb" wide
+    $str4 = "\\Growtopia\\save.dat" wide
+    $str5 = "dcd.exe"
+    $str6 = "Getting all mac addresses.." wide
+    $str7 = "Decoding save.dat.." wide
+    $str8 = "Growtopia" wide nocase
+    $str9 = "ekernel32.dll" wide
+    $url = "httpx://eterprx[.]net" wide //I just defanged the URL here, incase anyone accidentally clicks it
+  
+  condition:
+    uint16be(0) and
+    all of ($str*) and $url
+}

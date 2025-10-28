@@ -1,0 +1,24 @@
+rule nsis_magnat
+{
+  meta:
+    author = "Denice"
+    description = "Matches hex dump of NSIS"
+    hash = "e2e66789c7f6627bfb270c609bae28cd9df7d369a5ba504dccc623eb11f9e3f2"
+    
+  strings:
+    $hex1 = { 55 8B EC 83 EC 5C 83 7D  0C 0F }
+    $hex2 = { 81 EC D4  02 00 00 } //entry point
+    $hex3 = { 8b 44 24 04 50 83 60 24 00 c7 00 }
+      /*
+      0x00405a3d      mov     eax, dword [pExecInfo]
+      0x00405a41      push    eax        ; unknown_t *pExecInfo
+      0x00405a42      and     dword [eax + 0x24], 0
+      0x00405a46      mov     dword [eax], 0x3c ; '<' ; 60
+      0x00405a4c      call    dword [ShellExecuteExW] ; 0x408188 ; BOOL ShellExecuteExW(unknown_t *pExecInfo)
+      0x00405a52      ret     4
+      */
+
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+}

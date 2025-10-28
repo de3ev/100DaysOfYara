@@ -1,0 +1,15 @@
+rule check_if_PS_is_obfuscated
+{
+  meta: 
+    author = "Denice"
+    description = "Detects if Powershell contains method of code execution and obfuscation"
+
+  strings:
+    $str1 = "iex" nocase
+    $str2 = "frombase64string" ascii nocase
+    $str3 = "system.convert" wide ascii nocase
+    $str4 = "downloadstring" ascii nocase
+
+  condition:
+    all of them
+}

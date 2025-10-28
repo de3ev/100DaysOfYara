@@ -1,0 +1,16 @@
+rule is_debugger_present 
+{
+   meta:
+    author = "Denice"
+    description = "Detects if the binary contains anti-analysis techniques such as the API "IsDebuggerPresent". Day 6 of 100 Days of Yara"
+
+  strings:
+    $str1 = "isdebuggerpresent" nocase
+    $str2 = "checkremotedebuggerpresent" nocase
+    $str3 = "outputdebugString" nocase
+    $str4 = "ntsetinformationthread" nocase
+
+  condition:
+    any of them and uint16(0) == 0x5A4D
+
+}

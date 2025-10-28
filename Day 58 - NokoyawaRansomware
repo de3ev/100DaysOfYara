@@ -1,0 +1,22 @@
+rule detects_NokoyawaRansomware
+{
+  meta:
+    author = "Denice"
+    description = "NokoyawaRansomware"
+    hash = "855f411bd0667b650c4f2fd3c9fbb4fa9209cf40b0d655fa9304dcdd956e0808"
+  
+  strings:
+    $str1 = "C:\\Users\\user\\Desktop\\new\\nevada_locker\\target\\release\\deps\\nevada.pdb"
+    $str2 = "library\\std\\src\\sys\\windows\\args.rs"
+    $str3 = "InitializeCriticalSectionAndSpinCount"
+    $str4 = "HeapSize"
+    $str5 = "TlsFree"
+    $str6 = "MPR.dll"
+    $str7 = "RaiseException"
+    $str8 = "/rustc/4b91a6ea7258a947e59c6522cd5898e7c0a6a88f\\library\\alloc\\src\\vec\\mod.rs"
+    $str9 = "readme.txtR3JlZXRpbmdzISBZb3VyIGZpbGVzIHdlcmUgc3RvbGVuIGFuZCBlbmNyeXB0ZWQuDQoNCgoKWW91IGhhdmUgdHdvIHdheXM6DQoKCS0+IFBheSBhIHJhbnNvbSBhbmQgc2F2ZSB5b3VyIHJlcHV0YXRpb24uDQoKCS0+IFdhaXQgZm9yIGEgbWlyYWNsZSBhbmQgbG9zZSBwcmVjaW91cyB0aW1lLg0KDQoKCgpXZSBhZHZpc2UgeW"
+  
+  condition:
+    uint16be(0) == 0x4D5A and all of them
+
+}

@@ -1,0 +1,35 @@
+  import "pe"
+  
+  rule dcrat_yara
+  {
+    meta:
+      author = "Denice"
+      description = "Detecting commands and obfuscated strings found from DCrat, sample downloaded from MalwareBazaar 2024-04-05 14:34"
+      hash = "A89667A64A05760547DD5B7F8A87181FB145A48ED2492392918E653C7E5BB9A6"
+      reference = "https://bazaar.abuse.ch/sample/a89667a64a05760547dd5b7f8a87181fb145a48ed2492392918e653c7e5bb9a6"
+  
+    strings:
+      $obfsc1= "L2Mgc2NodGFza3MgL2NyZWF0ZSAvZiAvc2Mgb25sb2dvbiAvcmwgaGlnaGVzdCAvdG4g" wide //c schtasks /create /f /sc onlogon /rl highest /tn
+      $obfsc2 = "VmlydHVhbFByb3RlY3Q=" wide //VirtualProtect
+      $obfsc3 = "U09GVFdBUkVcTWljcm9zb2Z0XFdpbmRvd3NcQ3VycmVudFZlcnNpb25cUnVuXA==" wide //SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+      $obfsc4 = "YW1zaS5kbGw=" wide //amsi.dll
+      $obfsc5 = "QW1zaVNjYW5CdWZmZXI=" wide //amsiscanbuffer
+      $s1 = "%AppData%" wide
+      $s2 = " [x] {0}" wide
+      $s3 = "DcRatByqwqdanchun" wide
+      $s4 = "ClientAlva.exe" nocase
+      $s5 = "X509CertificateCollection"
+      $cmd1 = "/f /q" wide
+      $cmd2 = "po_ng" nocase
+      $cmd3 = "& exit" wide
+      $cmd4 = "/tr" wide
+      $cmd5 = "START" wide
+      $cmd6 = "DEL" wide
+      $cmd7 = "@echo off" wide
+      
+    condition:
+      uint16be(0) == 0x4D5A and
+      pe.imports("mscoree.dll") and
+      4 of ($obfsc*) and 3 of ($s*) and all of ($cmd*)
+  }
+

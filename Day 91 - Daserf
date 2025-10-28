@@ -1,0 +1,32 @@
+rule yara_daserf
+{
+  meta:
+    author = "Denice"
+    description = "Matches and Detects commands and ransomware notes from Daserf sample"
+    hash = "DC892346618F8FE561A7219A59E7C6FD2E15FF463469A29708886A23F54157B9"
+  
+  strings:
+    $note1 = "Attention!!! Your files are encrypted !!!"
+    $note2 = "To recover files, follow the prompts in the text file \"Readme\""
+    $note3 = "All your files have been encrypted due to a security problemwith your PC. If you want to restore them, write us to the e-mail support: stnsatan@aol[.]com or Satan-Stn@bitmessage[.]ch"
+    $note4 = "In case of no answer in 24 hours write us to theese e-mails support: stnsatan@aol[.]com or Satan-Stn@bitmessage[.]ch"
+    $note5 = "Write this ID in the title of your message"
+    $note6 = "Do not rename encrypted files."
+    $s1 = "vssadmin delete shadows /all"
+    $s2 = "ReadMe.TxT"
+    $s3 = "comspec"
+    $script1 = "For /F \"tokens=2 skip=2 delims=,\" %%P In ('tasklist /FI \"WINDOWTITLE eq %WinTitle%\" /FO CSV') Do (Set MyPID=%%~P)"
+    $script2 = "Set WhiteList=Microsoft.ActiveDirectory.WebServices.exe:cmd.exe:find.exe:conhost.exe:explorer.exe:ctfmon.exe:dllhost.exe:lsass.exe:services.exe:smss.exe:tasklist.exe:winlogon.exe:wmiprvse.exe:msdts.exe:bfsvc.exe:AdapterTroubleshooter.exe:alg.exe:dwm.exe:issch.exe:rundll32.exe:spoolsv.exe:wininit.exe:wmiprvse.exe:wudfhost.exe:taskmgr.exe:rdpclip.exe:logonui.exe:lsm.exe:spoolsv.exe:dwm.exe:dfssvc.exe:csrss.exe:svchost.exe:" nocase
+    $script3 = "For /F \"tokens=1 skip=5 delims=,\" %%p In ('tasklist /FO CSV') Do (Echo :!ProcList!|Find /I \":%%~p:\">nul||Set ProcList=%%~p:!ProcList!)"
+    $script4 = "del w.bat" nocase
+    $script5 = "If Not \"%%C\"==\"\" ("
+    $script6 = "For /F \"tokens=1,* delims=:\" %%C In (\"!ProcList!\") Do ("
+    $script7 = "TASKKILL /F /IM \"sqlbrowser.exe\""
+  
+  condition:
+    uint16be(0) == 0x4D5A and
+    filesize < 1MB and
+    4 of ($note*) and
+    2 of ($s*) and
+    all of ($script*)
+}

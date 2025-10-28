@@ -1,0 +1,13 @@
+rule BinaryPatching_Main
+{
+  meta:
+    author = "Denice"
+    description = "Detecting main.exe from Binary Patching Labs of PMAT Course"
+  
+  strings:
+    $string1 = "bCryptGenRandom"
+    $hex = { 6E 69 6D 47 ?? }
+
+  condition:
+    $string1 and $hex
+}

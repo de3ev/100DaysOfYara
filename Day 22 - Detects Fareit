@@ -1,0 +1,17 @@
+rule detects_fareit
+{  
+  meta:
+    author = "Denice"
+    description = "Strings and imports found from this Fareit sample"
+    hash = "038FB1DDA079F7FB8248798D533CB9E0A7ADAF01AD7A8075D83F64333366E4AE"
+
+  strings:
+    $str1 = "wwwwwwpwppp0www"
+    $str2 = "wwwttDwwp"
+    $hex = { FF 25 6C 32 40 00 FF ?? } //DoPreparePrinting
+    $dll = "MFC42.dll" nocase
+
+  condition:
+    uint16be(0) == 0x4D5A and
+    all of them
+}

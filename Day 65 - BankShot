@@ -1,0 +1,24 @@
+rule bankshot_yara_rule
+{
+  meta:
+    author = "Denice"
+    description = "Detects and Matches BankShot sample"
+    hash = "0D99B59EE6427F62596DBD7D016CC9AD5B365DA152806703DBC5A5225164BBD5"
+  
+  strings:
+    $str1 = "ApssmPlayer.scr" wide
+    $str2 = "Software\\Policies\\Microsoft\\Windows\\System" wide
+    $str3 = "/c ping 127.1 -n 2 && del" wide
+    $str4 = "/c copy /y" wide
+    $str5 = "desk.cpl,, 1" wide
+    $str6 = "DeleteDC"
+    $str7 = "D:\\VB6\\VB6.OLB"
+    $dll = "MSVBVM60.DLL"
+    $dll2 = "winmm.dll"
+    
+  condition:
+    uint16be(0) == 0x4D5A and
+    5 of ($str*) and
+    $dll and $dll2
+}
+

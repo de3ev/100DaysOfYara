@@ -1,0 +1,27 @@
+rule atom_silo_ransomwareNote
+{
+  meta:
+      author = "Denice"
+      description = "AtomSilo Ransomware Notes"
+      hash = "81f01a9c29bae0cfa1ab015738adc5cc"
+  
+  strings: 
+      $note1 = "We are AtomSilo.Sorry to inform you that your files has been obtained and encrypted by us."
+      $note2 = "Any forced shutdown or attempts to restore your files with the thrid-party software will be "
+      $note3 = "damage your files permanently"
+      $note4 = "The only way to decrypt your files safely is to buy the special decryption software from us"
+      $note5 = "The price of decryption software is " nocase
+      $note6 = "1000000 dollars" nocase
+      $note7 = "If you pay within 48 hours, you only need to pay" nocase
+      $note8 = "500000 dollars"
+      $note9 = "No price reduction is accepted"
+      $note10 = "We only accept Bitcoin payment,you can buy it from bitpay,coinbase,binance or others" nocase
+      $note11 = "You have five days to decide whether to pay or not. After a week, we will no longer provide decryption tools and publish your files" nocase
+  
+  
+  condition:
+      uint16be(0) == 0x4D5A and
+      all of them
+
+}
+

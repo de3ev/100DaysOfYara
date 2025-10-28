@@ -1,0 +1,42 @@
+rule yara_snkkeylogger
+{
+  meta:
+    author = "Denice"
+    description = "Detects and matches browsers, strings, and functions found from this Snake Key Logger uploaded to Malware Bazaar 2024-04-08 13:18:38 UTC"
+    hash = "461BCD6658A32970B9BD12D978229B8D3C8C1F4BDF00688DB287B2B7CE6C880E"
+    reference = "https://bazaar.abuse.ch/sample/461bcd6658a32970b9bd12d978229b8d3c8c1f4bdf00688db287b2b7ce6c880e/"
+
+  strings:
+    $file = "fbXfjPLUOxpHounQOLpg.exe"
+    $app1 = "postbox" nocase wide
+    $app2 = "thunderbird" nocase wide
+    $app3 = "outlook" nocase wide
+    $browser1 = "pale moon" nocase wide
+    $browser2 = "slim" nocase wide
+    $browser3 = "cyberfox" nocase wide
+    $browser4 = "seamonkey" nocase wide
+    $browser5 = "sleipnir" nocase wide
+    $browser6 = "xvast" nocase wide
+    $browser7 = "iridium" nocase wide
+    $s1 = "\\FileZilla\\recentservers.xml" wide
+    $s2 = "ataD nigoL\\elbatS arepO\\erawtfoS arepO\\" wide
+    $s3 = "tad.dnaw\\eliforp\\arepO\\arepO\\" wide
+    $s4 = "\\Microsoft\\Edge\\User Data\\Default\\Login Data"
+    $s5 = "89.208.29.130" wide
+    $s6 = "IMAP Password" wide
+    $s7 = "POP3 Password" wide
+    $s8 = "/_send_.php?TS" wide
+    $s9 = "keystroke Logs ID" wide
+    $s10 = "clipboard logs ID" nocase wide
+    $s11 = "connected wifi" nocase wide
+    $s12 = "scratchdreams.tk" wide
+    $cmd = "/C choice /C Y /N /D Y /T 3 & Del" wide
+    $func1 = "bcrypt"
+    $func2 = "BCryptDecrypt"
+    //$e = "ChainingModeGCM" wide
+    
+  condition:
+    uint16be(0) == 0x4D5A and $file
+    and 2 of ($app*) and 5 of ($browser*) and 8 of ($s*)
+    and $cmd and $func1 and $func2
+}

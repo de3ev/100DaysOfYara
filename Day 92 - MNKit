@@ -1,0 +1,25 @@
+import "pe"
+
+rule mnkit_yara
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule to detect MNKit sample"
+    reference = "https://vx-underground.org/Samples/Families/MNKit"
+
+  strings:
+    $s1 = "\\IconConfigBt.DAT" wide
+    $s2 = "\\MemoryLoad.dump" wide
+    $s3 = "\\%dt%dcf%d.dll" wide
+    $s4 = "MyCreateRemoteThread() : CreateRemoteThread()"
+    $s5 = "RasEapCreateConnectionProperties_XP"
+    $s6 = "CreateMutexW"
+    $s7 = "RasTls.dll" nocase wide
+    $p1 = "SOFTWARE\\Microsoft\\Windows\\DbxUpdateBT" wide
+    $p2 = "ProgramFiles%\\Internet Explorer\\iexplore.exe" wide
+  
+  condition:
+    pe.exports ("RasEapGetCredentials") and pe.number_of_exports == 14 and
+    all of them
+}
+

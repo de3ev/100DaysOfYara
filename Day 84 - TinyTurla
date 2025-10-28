@@ -1,0 +1,29 @@
+rule Yara_TinyTurla_PolishNGO
+{
+  meta:
+    author = "Denice"
+    description = "Yara rule for Cisco Talos' research on TinyTurla spying on Polish NGO"
+    hash = "d6ac21a409f35a80ba9ccfe58ae1ae32883e44ecc724e4ae8289e7465ab2cf40 and 267071df79927abd1e57f57106924dd8a68e1c4ed74e7b69403cdcdf6e6a453b"
+    reference = "https://blog.talosintelligence.com/tinyturla-next-generation/
+  
+  strings:
+    $s1 = "thefinetreats[.]com"
+    $s2 = "hanagram[.]jp" 
+    $s3 = "rss-old[.]php"
+    $s4 = "caduff-sa[.]ch"
+    $s5 = "jeepcarlease[.]com"
+    $cmd1 = "delkill /F /IM explENT_USER\\Softwar"
+    $cmd2 = "delmeout"
+    $cmd3 = "Set-PSReadLineOption -HistorySaveStyle SaveNothing"
+    $cmd4 = "chcp 437"
+    $cmd5 = "killme"
+    $regkey1 = "C2796011-81BA-4148-8FCA-C664324"
+    $regkey2 = "HKEY_CURRe\\Classes\\CLSID\\"
+    $import1 = "RegQueryValueExA"
+    $import2 = "RegEnumKeyExA"
+
+  condition:
+    uint16be(0) == 0x4d5A and filesize < 2MB and
+    2 of ($s*) and all of ($cmd*) and all of ($regkey*)
+    and all of ($import*)
+}
